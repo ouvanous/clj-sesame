@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:dbpedia-owl="http://dbpedia.org/ontology/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:dbpprop="http://dbpedia.org/property/"
+	xmlns:ns7="http://www.w3.org/ns/prov#" >
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scots_Pine">
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/LivingThing100004258" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/TreesOfSiberia" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/Organism100004475" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/GardenPlant113083306" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/Whole100003553" />
+    <rdf:type rdf:resource="http://umbel.org/umbel/rc/BiologicalLivingObject" />
+    <rdf:type rdf:resource="http://umbel.org/umbel/rc/EukaryoticCell" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/Object100002684" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/LeastConcernPlants" />
+    <rdf:type rdf:resource="http://dbpedia.org/ontology/Species" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/TreesOfHumidContinentalClimate" />
+    <rdf:type rdf:resource="http://dbpedia.org/ontology/Plant" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/PhysicalEntity100001930" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/TreesOfMildMaritimeClimate" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/VascularPlant113083586" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/TreesOfContinentalSubarcticClimate" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/TreesOfSubpolarOceanicClimate" />
+    <rdf:type rdf:resource="http://umbel.org/umbel/rc/Plant" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Thing" />
+    <rdf:type rdf:resource="http://dbpedia.org/ontology/Eukaryote" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/GardenPlantsOfEurope" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/WoodyPlant113103136" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/Tree113104059" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/Plant100017222" />
+    <rdf:type rdf:resource="http://dbpedia.org/ontology/Conifer" />
+    <rdf:type rdf:resource="http://dbpedia.org/class/yago/OrnamentalTrees" />
+    <rdf:type rdf:resource="http://umbel.org/umbel/rc/Conifer" />
+    <owl:sameAs rdf:resource="http://rdf.freebase.com/ns/m.018tjk" />
+    <owl:sameAs rdf:resource="http://lod.geospecies.org/ses/3aUVS" />
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+    <owl:sameAs rdf:resource="http://eunis.eea.europa.eu/species/150624" />
+    <owl:sameAs rdf:resource="http://yago-knowledge.org/resource/Scots_Pine" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Trees_of_humid_continental_climate" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Trees_of_subpolar_oceanic_climate" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Forests_and_woodlands_of_Scotland" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Flora_of_Scotland" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Trees_of_mild_maritime_climate" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Trees_of_Siberia" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Least_concern_plants" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Flora_of_the_British_Isles" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Flora_of_Estonia" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Trees_of_continental_subarctic_climate" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Flora_of_Finland" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Flora_of_Lebanon" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Pinus" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Naturalized_trees_of_West_Virginia" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Ornamental_trees" />
+    <dcterms:subject rdf:resource="http://dbpedia.org/resource/Category:Garden_plants_of_Europe" />
+    <dbpedia-owl:abstract xml:lang="en">Scots Pine (Pinus sylvestris) is a species of pine native to Europe and Asia, ranging from Scotland, Ireland and Portugal in the west, east to eastern Siberia, south to the Caucasus Mountains, and as far north as well inside the Arctic Circle in Scandinavia. In the north of its range, it occurs from sea level to 1,000 m, while in the south of its range it is a high altitude mountain tree, growing at 1,200–2,600 m altitude. It is readily identified by its combination of fairly short, blue-green leaves and orange-red bark.</dbpedia-owl:abstract>
+    <dbpedia-owl:binomialAuthority rdf:resource="http://dbpedia.org/resource/Carl_Linnaeus" />
+    <dbpedia-owl:class rdf:resource="http://dbpedia.org/resource/Pinophyta" />
+    <dbpedia-owl:conservationStatus xml:lang="en">LR/lc</dbpedia-owl:conservationStatus>
+    <dbpedia-owl:conservationStatusSystem xml:lang="en">IUCN2.3</dbpedia-owl:conservationStatusSystem>
+    <dbpedia-owl:family rdf:resource="http://dbpedia.org/resource/Pinaceae" />
+    <dbpedia-owl:genus rdf:resource="http://dbpedia.org/resource/List_of_Pinus_species" />
+    <dbpedia-owl:genus rdf:resource="http://dbpedia.org/resource/Pine" />
+    <dbpedia-owl:kingdom rdf:resource="http://dbpedia.org/resource/Plant" />
+    <dbpedia-owl:order rdf:resource="http://dbpedia.org/resource/Pinales" />
+    <dbpedia-owl:wikiPageID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">181580</dbpedia-owl:wikiPageID>
+    <dbpedia-owl:wikiPageRevisionID rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">539545317</dbpedia-owl:wikiPageRevisionID>
+    <rdfs:label xml:lang="en">Scots Pine</rdfs:label>
+    <foaf:depiction rdf:resource="http://upload.wikimedia.org/wikipedia/commons/5/5f/Pinus_sylvestris_Glenmuick.jpg" />
+    <rdfs:comment xml:lang="en">Scots Pine (Pinus sylvestris) is a species of pine native to Europe and Asia, ranging from Scotland, Ireland and Portugal in the west, east to eastern Siberia, south to the Caucasus Mountains, and as far north as well inside the Arctic Circle in Scandinavia. In the north of its range, it occurs from sea level to 1,000 m, while in the south of its range it is a high altitude mountain tree, growing at 1,200–2,600 m altitude.</rdfs:comment>
+    <dbpedia-owl:division rdf:resource="http://dbpedia.org/resource/Pinophyta" />
+    <dbpedia-owl:thumbnail rdf:resource="http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pinus_sylvestris_Glenmuick.jpg/200px-Pinus_sylvestris_Glenmuick.jpg" />
+    <dbpprop:binomial xml:lang="en">Pinus sylvestris</dbpprop:binomial>
+    <dbpprop:binomialAuthority rdf:resource="http://dbpedia.org/resource/Carl_Linnaeus" />
+    <dbpprop:classis rdf:resource="http://dbpedia.org/resource/Pinophyta" />
+    <dbpprop:divisio rdf:resource="http://dbpedia.org/resource/Pinophyta" />
+    <dbpprop:familia rdf:resource="http://dbpedia.org/resource/Pinaceae" />
+    <dbpprop:genus xml:lang="en">Pinus</dbpprop:genus>
+    <dbpprop:imageCaption xml:lang="en">Native Scots Pine at Glenmuick, Scotland.</dbpprop:imageCaption>
+    <dbpprop:ordo rdf:resource="http://dbpedia.org/resource/Pinales" />
+    <dbpprop:rangeMap xml:lang="en">Pinus sylvestris range-01.png</dbpprop:rangeMap>
+    <dbpprop:rangeMapCaption xml:lang="en">Distribution</dbpprop:rangeMapCaption>
+    <dbpprop:regnum xml:lang="en">Plantae</dbpprop:regnum>
+    <dbpprop:species xml:lang="en">P. sylvestris</dbpprop:species>
+    <dbpprop:status xml:lang="en">LR/lc</dbpprop:status>
+    <dbpprop:statusSystem xml:lang="en">IUCN2.3</dbpprop:statusSystem>
+    <dbpprop:subgenus xml:lang="en">Pinus</dbpprop:subgenus>
+    <foaf:isPrimaryTopicOf rdf:resource="http://en.wikipedia.org/wiki/Scots_Pine" />
+    <ns7:wasDerivedFrom rdf:resource="http://en.wikipedia.org/wiki/Scots_Pine?oldid=539545317" />
+    <dbpprop:hasPhotoCollection rdf:resource="http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scots_pine">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/For%C3%AAt_d&#39;%C3%89couves">
+    <dbpprop:species rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Ashdown_Forest">
+    <dbpprop:plant rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Clan_Mackinnon">
+    <dbpprop:plantBadge rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Clan_MacQuarrie">
+    <dbpprop:plantBadge rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scots">
+    <dbpedia-owl:wikiPageDisambiguates rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Cors_Caron">
+    <dbpprop:plant rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Red_Deal">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scotch_fir">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scotch_pines">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Clan_Gregor">
+    <dbpprop:plantBadge rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Clan_Grant">
+    <dbpprop:plantBadge rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/The_landscape_of_Ashdown_Forest">
+    <dbpprop:plant rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Pinus_sylvestris">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Cors_Fochno">
+    <dbpprop:plant rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://en.wikipedia.org/wiki/Scots_Pine">
+    <foaf:primaryTopic rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scotch_pine">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scotch_Pine">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Scots_fir">
+    <dbpedia-owl:wikiPageRedirects rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dbpedia.org/resource/Stapleford_Woods">
+    <dbpprop:species rdf:resource="http://dbpedia.org/resource/Scots_Pine" />
+  </rdf:Description>
+</rdf:RDF>

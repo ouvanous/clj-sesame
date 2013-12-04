@@ -1,0 +1,117 @@
+
+
+# basic prefixes
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix schema: <http://schema.org/> .
+
+
+# sanco prefixes 
+@prefix rdfam: <http://rdfamaker.ouvanous.com/> .
+@prefix frm: <http://frm.ouvanous.com/> .
+
+
+
+# current dataset uri to be included in the graph <http://datasources.ouvanous.com/EU-dataset-1/timestamp>
+@prefix : <http://datasources.ouvanous.com/EU-dataset-1/> .
+
+
+# software agent that make the convertion from
+rdfam:rdfamakerAgent
+  a prov:SoftwareAgent;
+  rdfs:label "RDFaMaker";
+  schema:version "1.0";
+.
+
+
+
+# CSV owner agent 
+<mailto:samuel.morello@ouvanous.com> 
+  a prov:Agent, schema:ContactPoint;
+  schema:name "Samuel Morello";
+  schema:affiliation "OUVANOUS";
+  schema:address :contact-point-address;
+  schema:email "samuel.morello@ouvanous.com";
+.
+
+# address of the csv owner agent
+:contact-point-address 
+  a schema:Address;
+  schema:streetAddress ""; 
+  schema:postalCode ""; 
+  schema:country "EU"; 
+.
+
+
+
+# dataset informations 
+rdfam:csvDataset 
+  a prov:Entity;
+  prov:wasAssociatedWith <mailto:samuel.morello@ouvanous.com>;
+.
+
+
+
+
+# activity 
+rdfam:convertCSVToRDFa
+  a prov:Activity;
+  schema:name "Transform CSV to RDFa";
+  prov:wasAssociatedWith rdfam:rdfamakerAgent;
+  prov:used rdfam:csvDataset;
+.
+
+
+
+
+# graph
+:
+  a prov:Collection;
+  prov:wasGeneratedBy rdfam:convertCSVToRDFa;
+  prov:wasAttributedTo rdfam:rdfamakerAgent;
+  prov:hadMember 
+    :0001,
+    :0002,
+    :0003,
+    :0004;
+    #:000n;
+.
+
+
+
+
+## THIS iS ADDED WHEN IMPORTED BY FRM web app
+
+# agent 
+frm:frmRDFamakerImporter
+  a prov:SoftwareAgent;
+  rdfs:label "FRM RDFAaMaker importer";
+  schema:version "1.1";
+. 
+
+# activity 
+frm:importFromRdfaMaker 
+  a prov:Activity;
+  prov:agent frm:frmRDFamakerImporter;
+.
+
+
+
+# provenance information on the graph imported 
+# entity
+:timestamp 
+  prov:wasDerivedFrom :;
+  prov:wasGeneratedBy frm:importFromRdfaMaker;
+  prov:generatedAtTime "2012-04-01T15:21:00"^^xsd:dateTime; 
+.
+
+
+
+
+
+
+
+
+
