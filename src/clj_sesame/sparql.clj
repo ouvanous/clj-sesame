@@ -11,7 +11,8 @@
     org.openrdf.query.resultio.sparqlxml.SPARQLResultsXMLWriter
     org.openrdf.rio.Rio
     org.openrdf.rio.RDFFormat
-    org.openrdf.rio.RDFWriter))
+    org.openrdf.rio.RDFWriter
+    org.openrdf.repository.RepositoryException))
 
 
 
@@ -36,7 +37,7 @@
 ;- ----------------------------------------------------------------------------
 ;- 
 
-(defn sparql-query 
+(defn select 
   "doc-string"
   [repo query format]
   (with-open [conn (get-connection repo)
@@ -48,17 +49,49 @@
       (.evaluate sparql-query writer)
       (.toString bs))))
 
-(defn json-sparql-query
+(defn json-select
   [repo query]
-  (sparql-query repo query :json))
+  (select repo query :json))
 
-(defn xml-sparql-query
+(defn xml-select
   [repo query]
-  (sparql-query repo query :xml))
+  (select repo query :xml))
 
 
 
 
+
+
+
+;- ----------------------------------------------------------------------------
+;- 
+
+(defn update 
+  [repo query]
+  (with-open [conn (get-connection repo)]
+    (try 
+      (.begin conn)
+      (let [update-query (.prepareUpdate conn QueryLanguage/SPARQL query)] 
+        (.execute update-query))
+      (.commit conn)
+      (catch RepositoryException e
+        (.rollback conn)))))
+    
+
+
+
+
+
+
+
+;- ----------------------------------------------------------------------------
+;- 
+
+(defn ask
+  [repo query]
+  (with-open [conn (get-connection repo)]
+    (let [ask-query (.prepareBooleanQuery conn QueryLanguage/SPARQL query)]
+      (.evaluate ask-query))))
 
 
 
@@ -78,39 +111,17 @@
       (.toString bs))))
 
 
-(defn turtle-graph-query
+(defn turtle-graph
   [repo query]
   (graph-query repo query :turtle))
 
-(defn xml-graph-query
+(defn xml-graph
   [repo query]
   (graph-query repo query :xml))
 
-(defn jsonld-graph-query
+(defn jsonld-graph
   [repo query]
   (graph-query repo query :jsonld))
-
-;- ----------------------------------------------------------------------------
-;- 
-
-
-; (def repo (get-repository "http://localhost:8080/openrdf-sesame" "uuu"))
-; ; (def conn (get-connection repository))
-
-
-
-
-; (process-tuple-query repo q1 println)
-
-
-
-
-
-
-
-
-;- ----------------------------------------------------------------------------
-;- 
 
 
 

@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.openrdf.sesame/sesame-runtime "2.7.8"]
                  [org.apache.marmotta/sesame-tools-rio-jsonld "3.0.0-incubating"]
-                 [org.apache.directory.studio/org.apache.commons.logging "1.1.3"]])
+                 [org.apache.directory.studio/org.apache.commons.logging "1.1.3"]]
+  :user {:plugins [[lein-midje "3.0.0"]]})

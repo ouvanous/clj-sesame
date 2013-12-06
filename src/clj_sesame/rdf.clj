@@ -9,6 +9,13 @@
           org.openrdf.rio.RDFFormat))
 
 
+(defn get-contexts
+  [context]
+  (if (= clojure.lang.PersistentVector (type context))
+    (into-array Resource context)
+    (into-array Resource [context])))
+
+
 
 (defn subject 
   [statement]
@@ -36,10 +43,12 @@
   ([value-factory namespace local-name]
     (.createURI value-factory namespace local-name)))
 
+(def default-context (org.openrdf.model.impl.URIImpl. "default:graph"))
 
 (defn create-resource
   [uri]
   ^Resource uri)
+
 
 (defn create-literal
   ([value-factory str lang] 
@@ -48,106 +57,109 @@
     (.createLiteral value-factory str)))
   
 
+(defn get-language 
+  [literal]
+  (.getLanguage literal))
+
+
+(defn string-value 
+  [value]
+  (.stringValue value))
+
+
 (defn create-statement 
   ([value-factory s p o]
-    (.createStatement value-factory s p o))
+    (.createStatement value-factory s p o default-context))
   ([value-factory s p o context]
     (.createStatement value-factory s p o context)))
 
 
-(defn create-resource-statement
-  [s p o]
-  (let [s (create-uri s)
-        p (create-uri p)
-        o (create-uri o)]
-    (create-statement s p o)))
-
-
-(defn create-literal-statement
-  [s p o lang]
-  (let [s (create-uri s)
-        p (create-uri p)
-        o (create-literal o lang)]
-    (create-statement s p o)))
-
-
-(defn get-contexts
-  [context]
-  (if (= clojure.lang.PersistentVector (type context))
-    (into-array Resource context)
-    (into-array Resource [context])))
-
 
 (defn add-statement
+  ([repo s p o]
+    (repo-transaction repo
+      (.add s p o (get-contexts default-context))))
   ([repo s p o context]
-    (with-open [conn (get-connection repo)]
-      (try 
-        (doto conn
-          (.begin)
-          (.add s p o (get-contexts context))
-          (.commit))
-        (catch RepositoryException e 
-          (.rollback conn)))))
+    (repo-transaction repo
+      (.add s p o (get-contexts context))))
+  ([repo statement]
+    (repo-transaction repo
+      (.add statement (get-contexts default-context))))
   ([repo statement context]
-    (with-open [conn (get-connection repo)]
-      (try 
-        (doto conn
-          (.begin)
-          (.add statement (get-contexts context))
-          (.commit))
-        (catch RepositoryException e 
-          (.rollback conn))))))
+    (repo-transaction repo
+      (.add statement (get-contexts context)))))
 
 
 (defn add-statements
   [repo statements context]
-    (with-open [conn (get-connection repo)]
-      (try 
-        (println statements)
-        (println (into-array Statement statements))
-        (doto conn
-          (.begin)
-          (.add (java.util.ArrayList. statements) (get-contexts context))
-          (.commit))
-        (catch RepositoryException e 
-          (.rollback conn)))))
+    (repo-transaction repo
+      (.add (java.util.ArrayList. statements) (get-contexts context))))
+
+
+(defn remove-statement
+  ([repo s p o context]
+    (repo-transaction repo
+      (.remove s p o (get-contexts context))))
+  ([repo statement context]
+    (repo-transaction repo
+      (.remove statement (get-contexts context)))))
+
+
+(defn process-repository-results 
+  [process results]
+  (doseq [result (sesame-iterator-seq results)]
+    (process result)))
 
 
 (defn process-statements-query
   [repo s p o process]
   (with-open [conn (get-connection repo)]
-    (let [stmts (.getStatements conn s p o true (into-array org.openrdf.model.Resource []))]
-        (doseq [tuple (sesame-iterator-seq stmts)]
-          (process tuple)))))
+    (let [stmts (.getStatements conn s p o true (into-array Resource []))]
+      (process-repository-results process stmts))))
 
 
 (defn- add-rdf
   [repo stream format context]
-  (with-open [conn (get-connection repo)]
-    (try
-      (doto conn
-        (.begin)
-        (.add stream "" format (get-contexts context))
-        (.commit))
-      (catch RepositoryException e 
-        (.rollback conn)))))
+  (repo-transaction repo
+    (.add stream "" format (get-contexts context))))
     
 
-(defn add-rdf-file
+(defn add-file
   [repo file-name format context]
   (let [format (get-rdf-format format)]
     (let [file (java.io.File. file-name)]
       (add-rdf repo file format context))))
 
 
-(defn add-rdf-uri
+(defn add-uri
   [repo uri-string format context]
   (let [format (get-rdf-format format)]
     (with-open [stream (clojure.java.io/input-stream uri-string)]
       (add-rdf repo stream format context))))
 
 
+(defn clear-context
+  [repo context]
+  (repo-transaction repo 
+    (.clear (get-contexts context))))
 
 
+(defn get-context-ids
+  [repo]
+  (with-open [conn (get-connection repo)
+              results (.getContextIDs conn)]
+    (let [seq (sesame-iterator-seq results)]
+      (vec (doall (map identity seq))))))
+
+
+(defn context-size
+  [repo context]
+  (with-open [conn (get-connection repo)]
+    (let [size (.size conn (get-contexts context))]
+      size)))
+
+
+(defn all-contexts-size 
+  [repo]
+  (context-size repo (get-context-ids repo)))
   
-

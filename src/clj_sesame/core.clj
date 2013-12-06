@@ -1,6 +1,7 @@
 (ns clj-sesame.core
-  (:use clj-sesame.repository)
-  (import org.openrdf.rio.RDFFormat))
+  (import org.openrdf.rio.RDFFormat
+          org.openrdf.repository.RepositoryException))
+
 
 
 

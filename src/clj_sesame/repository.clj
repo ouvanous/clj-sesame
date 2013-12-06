@@ -1,10 +1,12 @@
 (ns clj-sesame.repository
+  (:use clj-sesame.core)
   (import 
     org.openrdf.repository.manager.RemoteRepositoryManager
     org.openrdf.repository.Repository
     org.openrdf.repository.sail.SailRepository
     org.openrdf.sail.memory.MemoryStore
-    org.openrdf.repository.RepositoryException))
+    org.openrdf.repository.RepositoryException
+    org.openrdf.repository.http.HTTPRepository))
 
 
 
@@ -13,6 +15,18 @@
 
 
 
+
+
+(defmacro repo-transaction 
+  [repo body]
+  `(with-open [conn# (get-connection ~repo)]
+    (try 
+     (doto conn#
+       (.begin)
+       (~@body)
+       (.commit))
+     (catch RepositoryException e# 
+       (.rollback conn#)))))
 
 
 
@@ -67,6 +81,52 @@
   (let [repo (SailRepository. (MemoryStore.))]
     (.initialize repo)
     repo))
+
+
+
+
+
+
+
+;- ----------------------------------------------------------------------------
+;- 
+
+(defn http-repository
+  ([end-point-uri]
+    (let [repo (HTTPRepository. end-point-uri)])))
+
+
+
+
+(defn namespace-to-vec
+  [namespace]
+  [(keyword (.getPrefix namespace)) (.getName namespace)])
+
+  
+(defn get-namespaces
+  [repo]
+  (with-open [conn (get-connection repo)]
+    (let [results (.getNamespaces conn)]
+      (into {} (doall (map namespace-to-vec (sesame-iterator-seq results)))))))
+
+
+(defn set-namespace
+  [repo prefix namespace]
+  (repo-transaction repo 
+    (.setNamespace (name prefix) namespace)))
+
+
+(defn set-namespaces
+  [repo namespaces]
+  (with-open [conn (get-connection repo)]
+    (try 
+      (.begin conn)
+      (doseq [[prefix namespace] namespaces]
+        (.setNamespace conn (name prefix) namespace))
+      (.commit conn)
+      (catch RepositoryException e 
+        (.rollback conn)))))
+
 
 
 
