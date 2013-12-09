@@ -26,5 +26,6 @@
     :n3     RDFFormat/N3
     :nt     RDFFormat/NTRIPLES 
     :xml    RDFFormat/RDFXML
-    :jsonld RDFFormat/JSONLD))
+    :jsonld RDFFormat/JSONLD
+    :rdfa   RDFFormat/RDFA))
 

@@ -5,8 +5,13 @@
           (org.openrdf.model Resource Statement)
           info.aduna.iteration.Iterations
           org.openrdf.model.impl.LinkedHashModel
+          org.openrdf.repository.util.RDFInserter
           org.openrdf.rio.Rio
-          org.openrdf.rio.RDFFormat))
+          org.openrdf.rio.RDFFormat
+          org.ccil.cowan.tagsoup.Parser
+          org.semarglproject.source.StreamProcessor
+          org.semarglproject.rdf.rdfa.RdfaParser
+          org.semarglproject.sesame.core.sink.SesameSink))
 
 
 
@@ -194,9 +199,9 @@
 
 
 (defn- add-rdf
-  [repo stream format context]
+  [repo stream baseURI format context]
   (repo-transaction repo
-    (.add stream "" format (get-contexts context))))
+    (.add stream baseURI format (get-contexts context))))
 
 
 
@@ -208,7 +213,22 @@
   [repo file-name format context]
   (let [format (get-rdf-format format)]
     (let [file (java.io.File. file-name)]
-      (add-rdf repo file format context))))
+      (add-rdf repo file "" format context))))
+
+
+
+
+
+(defn add-rdfa 
+  [repo uri-string context]
+  (with-open [conn (get-connection repo)]
+    (let [model (RDFInserter. conn)
+          ts (Parser.)
+          sp (StreamProcessor. (RdfaParser/connect (SesameSink/connect model)))]
+      (.enforceContext model (get-contexts context))
+      (doto sp 
+        (.setProperty StreamProcessor/XML_READER_PROPERTY ts)
+        (.process uri-string)))))
 
 
 
@@ -217,12 +237,15 @@
 
 (defn add-uri
   "add an rdf uri to a repository"
-  [repo uri-string format context]
-  (let [format (get-rdf-format format)]
-    (with-open [stream (clojure.java.io/input-stream uri-string)]
-      (add-rdf repo stream format context))))
-
-
+  ([repo uri-string format]
+    (add-uri repo uri-string format default-context))
+  ([repo uri-string format context]
+    (if (= format :rdfa)
+      (add-rdfa repo uri-string context)
+      (let [format (get-rdf-format format)]
+        (with-open [stream (clojure.java.io/input-stream uri-string)]
+          (add-rdf repo stream uri-string format context))))))
+  
 
 
 
