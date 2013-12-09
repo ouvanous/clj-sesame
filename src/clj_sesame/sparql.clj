@@ -33,7 +33,6 @@
 
 
 
-
 ;- ----------------------------------------------------------------------------
 ;- 
 
@@ -62,7 +61,6 @@
 
 
 
-
 ;- ----------------------------------------------------------------------------
 ;- 
 
@@ -76,8 +74,6 @@
       (.commit conn)
       (catch RepositoryException e
         (.rollback conn)))))
-    
-
 
 
 
@@ -92,6 +88,9 @@
   (with-open [conn (get-connection repo)]
     (let [ask-query (.prepareBooleanQuery conn QueryLanguage/SPARQL query)]
       (.evaluate ask-query))))
+
+
+
 
 
 

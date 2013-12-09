@@ -6,12 +6,17 @@
 
 
 
+
 (defn sesame-iterator-seq [results]
   (lazy-seq
    (when (.hasNext results)
      (cons 
       (.next results)
       (sesame-iterator-seq results)))))
+
+
+
+
 
 
 (defn get-rdf-format
