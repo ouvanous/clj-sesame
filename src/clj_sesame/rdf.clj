@@ -96,14 +96,6 @@
       (.add (java.util.ArrayList. statements) (get-contexts context))))
 
 
-(defn remove-statement
-  ([repo s p o context]
-    (repo-transaction repo
-      (.remove s p o (get-contexts context))))
-  ([repo statement context]
-    (repo-transaction repo
-      (.remove statement (get-contexts context)))))
-
 
 (defn process-repository-results 
   [process results]
@@ -163,3 +155,23 @@
   [repo]
   (context-size repo (get-context-ids repo)))
   
+
+
+(defn remove-statement
+  ([repo s p o context]
+    (repo-transaction repo
+      (.remove s p o (get-contexts context))))
+  ([repo statement context]
+    (repo-transaction repo
+      (.remove statement (get-contexts context)))))
+
+
+(defn remove-context-statements
+  [repo context]
+  (with-open [conn (get-connection repo)]
+    (.clear conn (get-contexts context))))
+
+(defn remove-all-statements
+  [repo]
+  (with-open [conn (get-connection repo)]
+    (.clear conn (get-contexts (get-context-ids repo)))))

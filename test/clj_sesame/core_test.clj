@@ -24,7 +24,7 @@
 
 
   (testing "Mem repo should be empty"
-    (is (= 0 (rdf/context-size repo nil))))
+    (is (= 0 (rdf/all-contexts-size repo))))
 
 
   (testing "create and add a statement"
@@ -49,29 +49,18 @@
         (rdf/add-statement repo stmt context)
         (rdf/add-statement repo stmt2)
         (rdf/add-statement repo stmt2 context)
-        (is (= 4 (rdf/all-contexts-size repo)))
+        (is (= 4 (rdf/all-contexts-size repo))))
+
+      (testing " - find statement")
+
+      (testing " - remove statements"
+        (rdf/remove-context-statements repo context)
+        (is (= 2 (rdf/all-contexts-size repo)))
+        (rdf/remove-all-statements repo)
+        (is (= 0 (rdf/all-contexts-size repo)))
+
+      (testing " - add multiple statements"
+        (rdf/add-statements repo [stmt stmt2])
+        (is (= 2 (rdf/all-contexts-size repo))))
+
       ))))
-
-; (defn t 
-;   [e]
-;   e)
-
-
-; (def repo (repository/create-mem-repository))
-; (let [context (rdf/create-uri vf "http://ouva.io/")
-;           s (rdf/create-uri vf "http://ouva.io/resource-1")
-;           p (rdf/create-uri vf"http://ouva.io/predicate-1")
-;           o1 (rdf/create-literal vf "This is a literal ")
-;           o2 (rdf/create-literal vf "This is a literal with lang" "en")
-;           stmt (rdf/create-statement vf s p o1)
-;           stmt2 (rdf/create-statement vf s p o2 context)]
-;           (rdf/add-statement repo s p o1))
-; (defn tt 
-;   [repo]
-;   (with-open [conn (repository/get-connection repo)
-;             results (.getContextIDs conn)]
-;       (let [r (sesame-iterator-seq results)]
-;       (doall (map t r)))))
-
-
-; (println "????" (tt repo))
