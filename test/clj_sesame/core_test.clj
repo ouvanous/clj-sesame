@@ -9,10 +9,6 @@
 
 
 
-(defn fn-1
-  [stmt]
-  (println (rdf/string-value (rdf/subject stmt))))
-
 
 
 (deftest mem-repo-test
@@ -113,7 +109,6 @@
         (repository/set-namespaces repo {:ouva "http://ouva.io/" :ouv2 "http://ouva.io/2/"})
         (is (= 13 (count (keys (repository/get-namespaces repo)))))
 
-      ; (testing "namesapce")
       ; need to test add-uri 
 
       )))
