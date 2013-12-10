@@ -13,10 +13,6 @@
 
 
 
-
-
-
-
 (defmacro repo-transaction 
   [repo body]
   `(with-open [conn# (get-connection ~repo)]
@@ -31,9 +27,10 @@
 
 
 
+
+
 ;- ----------------------------------------------------------------------------
 ;- REMOTE REPO
-
 
 (defn remote-manager 
   "Get the remote manager"
@@ -65,9 +62,11 @@
 
 
 
+
 (defn get-value-factory 
   [repo]
   (.getValueFactory repo))
+
 
 
 
@@ -98,11 +97,17 @@
 
 
 
+
+
 (defn namespace-to-vec
   [namespace]
   [(keyword (.getPrefix namespace)) (.getName namespace)])
 
-  
+
+
+
+
+
 (defn get-namespaces
   [repo]
   (with-open [conn (get-connection repo)]
@@ -110,10 +115,18 @@
       (into {} (doall (map namespace-to-vec (sesame-iterator-seq results)))))))
 
 
+
+
+
+
 (defn set-namespace
   [repo prefix namespace]
   (repo-transaction repo 
     (.setNamespace (name prefix) namespace)))
+
+
+
+
 
 
 (defn set-namespaces

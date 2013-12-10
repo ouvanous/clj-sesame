@@ -188,10 +188,27 @@
 
 (defn process-statements-query
   "process a statements query"
-  [repo s p o process]
-  (with-open [conn (get-connection repo)]
-    (let [stmts (.getStatements conn s p o true (into-array Resource []))]
-      (process-repository-results process stmts))))
+  ([repo s p o process]
+    (process-statements-query repo s p o default-context process))
+  ([repo s p o context process]
+    (with-open [conn (get-connection repo)
+                stmts (.getStatements conn s p o true (get-contexts context))]
+        (process-repository-results process stmts))))
+
+
+
+
+
+
+(defn get-statements 
+  "return statements results has clojure vector"
+  ([repo s p o]
+    (get-statements repo s p o default-context))
+  ([repo s p o context]
+    (with-open [conn (get-connection repo)
+                results (.getStatements conn s p o true (get-contexts context))]
+      (let [seq (sesame-iterator-seq results)]
+        (vec (doall (map identity seq)))))))
 
 
 
@@ -277,7 +294,7 @@
 
 
 (defn all-contexts-size 
-  "coutn all the statements for all contexts"
+  "count all the statements for all contexts"
   [repo]
   (context-size repo (get-context-ids repo)))
 
@@ -312,6 +329,7 @@
 
 
 (defn remove-all-statements
+  "get all contexts and remove all the statements for each contexts"
   [repo]
   (with-open [conn (get-connection repo)]
     (.clear conn (get-contexts (get-context-ids repo)))))

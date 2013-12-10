@@ -16,7 +16,7 @@
 (add-uri repo "http://dbpedia.org/data/Scots_Pine.rdf" :xml context)
 
 
-; (println (add-uri repo "http://rapex.ouvanous.com/report" :rdfa))
+(println (add-uri repo "http://rapex.ouvanous.com/report" :rdfa))
 ; (println (all-contexts-size repo))
 ; (println (get-context-ids repo))
 

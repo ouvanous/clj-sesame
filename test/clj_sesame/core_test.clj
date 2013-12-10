@@ -9,6 +9,11 @@
 
 
 
+(defn fn-1
+  [stmt]
+  (println (rdf/string-value (rdf/subject stmt))))
+
+
 
 (deftest mem-repo-test
   (testing "Testing mem repository type"
@@ -51,16 +56,64 @@
         (rdf/add-statement repo stmt2 context)
         (is (= 4 (rdf/all-contexts-size repo))))
 
-      (testing " - find statement")
+      (testing " - find statement by subject"
+        (let [all-results  (rdf/get-statements repo s nil nil (rdf/get-context-ids repo))
+              default-graph-results (rdf/get-statements repo s nil nil)
+              context-results (rdf/get-statements repo s nil nil context)]
+          (is (= 4 (count all-results)))
+          (is (= 2 (count default-graph-results)))
+          (is (= 2 (count context-results)))))
+
+      (testing " - find statement by predicate"
+        (let [all-results  (rdf/get-statements repo nil p nil (rdf/get-context-ids repo))
+              default-graph-results (rdf/get-statements repo nil p nil)
+              context-results (rdf/get-statements repo nil p nil context)]
+          (is (= 4 (count all-results)))
+          (is (= 2 (count default-graph-results)))
+          (is (= 2 (count context-results)))))
+
+      (testing " - find statement by object"
+        (let [all-results  (rdf/get-statements repo nil nil o2 (rdf/get-context-ids repo))
+              default-graph-results (rdf/get-statements repo nil nil o2)
+              context-results (rdf/get-statements repo nil nil o2 context)]
+          (is (= 2 (count all-results)))
+          (is (= 1 (count default-graph-results)))
+          (is (= 1 (count context-results)))))
+
+      (testing " - process statements-query"
+        "should print http://ouva.io/resource-1"
+        (rdf/process-statements-query repo s p o1 (fn [stmt]
+          (is (= "http://ouva.io/resource-1" (rdf/string-value (rdf/subject stmt)))))))
+
 
       (testing " - remove statements"
         (rdf/remove-context-statements repo context)
         (is (= 2 (rdf/all-contexts-size repo)))
         (rdf/remove-all-statements repo)
-        (is (= 0 (rdf/all-contexts-size repo)))
+        (is (= 0 (rdf/all-contexts-size repo))))
 
       (testing " - add multiple statements"
         (rdf/add-statements repo [stmt stmt2])
         (is (= 2 (rdf/all-contexts-size repo))))
 
-      ))))
+      (testing " - add rdf file"
+        (rdf/remove-all-statements repo)
+        (is (= 0 (rdf/all-contexts-size repo)))
+        (rdf/add-file repo "./test-files/Scots_Pine.rdf" :xml context)
+        (is (= 103 (rdf/context-size repo context)))
+        (rdf/remove-all-statements repo)
+        (is (= 0 (rdf/all-contexts-size repo)))
+        (rdf/add-file repo "./test-files/test.ttl" :turtle context)
+        (is (= 2 (rdf/context-size repo context))))
+
+      (testing "namespaces"
+        (is (= 11 (count (keys (repository/get-namespaces repo)))))
+        (repository/set-namespace repo :ouva "http://ouva.io/")
+        (is (= 12 (count (keys (repository/get-namespaces repo)))))
+        (repository/set-namespaces repo {:ouva "http://ouva.io/" :ouv2 "http://ouva.io/2/"})
+        (is (= 13 (count (keys (repository/get-namespaces repo)))))
+
+      ; (testing "namesapce")
+      ; need to test add-uri 
+
+      )))

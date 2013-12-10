@@ -37,7 +37,7 @@
 ;- 
 
 (defn select 
-  "doc-string"
+  "sparql select"
   [repo query format]
   (with-open [conn (get-connection repo)
               bs (java.io.ByteArrayOutputStream.)]
@@ -49,10 +49,12 @@
       (.toString bs))))
 
 (defn json-select
+  "helper to get results as json"
   [repo query]
   (select repo query :json))
 
 (defn xml-select
+  "helper to get results as rdfxml"
   [repo query]
   (select repo query :xml))
 
