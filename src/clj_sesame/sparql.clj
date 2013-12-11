@@ -12,7 +12,9 @@
     org.openrdf.rio.Rio
     org.openrdf.rio.RDFFormat
     org.openrdf.rio.RDFWriter
-    org.openrdf.repository.RepositoryException))
+    org.openrdf.repository.RepositoryException
+    org.openrdf.rio.helpers.JSONLDMode 
+    org.openrdf.rio.helpers.JSONLDSettings))
 
 
 
@@ -122,7 +124,15 @@
 
 (defn jsonld-graph
   [repo query]
-  (graph-query repo query :jsonld))
+  (with-open [conn (get-connection repo)
+              bs (java.io.ByteArrayOutputStream.)]
+    (let [sparql-query (.prepareGraphQuery conn QueryLanguage/SPARQL query)
+          writer (Rio/createWriter RDFFormat/JSONLD bs)
+          conf (.getWriterConfig writer)]
+      (println conf)
+      (.set conf JSONLDSettings/JSONLD_MODE JSONLDMode/COMPACT)
+      (.evaluate sparql-query writer)
+      (.toString bs))))
 
 
 

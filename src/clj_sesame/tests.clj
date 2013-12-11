@@ -9,16 +9,26 @@
 
 
 (def repo (create-mem-repository))
-
-; (def repo (create-mem-repository))
 (def vf (get-value-factory repo))
 (def context (create-uri vf "http://context"))
-(add-uri repo "http://dbpedia.org/data/Scots_Pine.rdf" :xml context)
+
+(add-uri repo "http://rapex.ouvanous.com/report" :rdfa context)
 
 
-(println (add-uri repo "http://rapex.ouvanous.com/report" :rdfa))
+(def construct-query-1 "
+  CONSTRUCT {
+    ?s ?p ?o 
+  } 
+  WHERE 
+  {
+
+    ?s ?p ?o
+  }
+  ")
+
+; (println (add-uri repo "http://rapex.ouvanousg.com/report" :rdfa))
 ; (println (all-contexts-size repo))
 ; (println (get-context-ids repo))
 
 
-(println (sparql/select repo "SELECT * WHERE {GRAPH ?g {?s ?p ?o}}" :json))
+(println (sparql/jsonld-graph repo construct-query-1))
