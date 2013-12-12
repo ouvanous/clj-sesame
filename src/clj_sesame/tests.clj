@@ -17,12 +17,13 @@
 
 (def construct-query-1 "
   CONSTRUCT {
-    ?s ?p ?o 
+    ?s a <http://schema.org/Product>;
+       <http://rapex.ouvanous.com/vocabulary/#productName> ?o.
   } 
   WHERE 
   {
-
-    ?s ?p ?o
+    ?s a <http://schema.org/Product>;
+       <http://rapex.ouvanous.com/vocabulary/#productName> ?o.
   }
   ")
 
