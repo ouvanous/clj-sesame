@@ -32,4 +32,4 @@
 ; (println (get-context-ids repo))
 
 
-(println (sparql/jsonld-graph repo construct-query-1))
+(sparql/select repo "SELECT * WHERE { ?s a <http://schema.org/Product> ; ?p ?o .}")

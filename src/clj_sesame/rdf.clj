@@ -175,25 +175,25 @@
 
 
 
-(defn process-repository-results 
-  "process each result"
-  [process results]
-  (doseq [result (sesame-iterator-seq results)]
-    (process result)))
+; (defn process-repository-results 
+;   "process each result"
+;   [process results]
+;   (doseq [result (sesame-iterator-seq results)]
+;     (process result)))
 
 
 
 
 
 
-(defn process-statements-query
-  "process a statements query"
-  ([repo s p o process]
-    (process-statements-query repo s p o default-context process))
-  ([repo s p o context process]
-    (with-open [conn (get-connection repo)
-                stmts (.getStatements conn s p o true (get-contexts context))]
-        (process-repository-results process stmts))))
+; (defn process-statements-query
+;   "process a statements query"
+;   ([repo s p o process]
+;     (process-statements-query repo s p o default-context process))
+;   ([repo s p o context process]
+;     (with-open [conn (get-connection repo)
+;                 stmts (.getStatements conn s p o true (get-contexts context))]
+;         (process-repository-results process stmts))))
 
 
 
@@ -208,7 +208,7 @@
     (with-open [conn (get-connection repo)
                 results (.getStatements conn s p o true (get-contexts context))]
       (let [seq (sesame-iterator-seq results)]
-        (vec (doall (map identity seq)))))))
+        (doall seq)))))
 
 
 

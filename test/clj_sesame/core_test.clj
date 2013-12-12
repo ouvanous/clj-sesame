@@ -76,10 +76,10 @@
           (is (= 1 (count default-graph-results)))
           (is (= 1 (count context-results)))))
 
-      (testing " - process statements-query"
-        "should print http://ouva.io/resource-1"
-        (rdf/process-statements-query repo s p o1 (fn [stmt]
-          (is (= "http://ouva.io/resource-1" (rdf/string-value (rdf/subject stmt)))))))
+      ; (testing " - process statements-query"
+      ;   "should print http://ouva.io/resource-1"
+      ;   (rdf/process-statements-query repo s p o1 (fn [stmt]
+      ;     (is (= "http://ouva.io/resource-1" (rdf/string-value (rdf/subject stmt)))))))
 
 
       (testing " - remove statements"
@@ -111,4 +111,4 @@
 
       ; need to test add-uri 
 
-      )))
+      ))))

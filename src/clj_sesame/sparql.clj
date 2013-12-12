@@ -21,18 +21,10 @@
 
 
 
-(defn process-tuple-query
-  "(process-tuple-query repository query-string my-function)"
-  [repo query process]
-  (with-open [conn (get-connection repo)]
-    (let [tuple-query (.prepareTupleQuery conn QueryLanguage/SPARQL query)]
-      (with-open [results (.evaluate tuple-query)]
-        (doseq [tuple (sesame-iterator-seq results)]
-          (process tuple))))))
 
-
-
-
+(defn- bindingset-to-set
+  [bs]
+  (reduce #(assoc %1 (keyword (.getName %2)) (str (.getValue %2)) ) {} bs))
 
 
 ;- ----------------------------------------------------------------------------
@@ -40,15 +32,21 @@
 
 (defn select 
   "sparql select"
-  [repo query format]
-  (with-open [conn (get-connection repo)
-              bs (java.io.ByteArrayOutputStream.)]
-    (let [sparql-query (.prepareTupleQuery conn QueryLanguage/SPARQL query)
-          writer (case format
-                    :json (SPARQLResultsJSONWriter. bs)
-                    :xml (SPARQLResultsXMLWriter. bs))]
-      (.evaluate sparql-query writer)
-      (.toString bs))))
+  ([repo query]
+    (with-open [conn (get-connection repo)
+                bs (java.io.ByteArrayOutputStream.)]
+      (let [sparql-query (.prepareTupleQuery conn QueryLanguage/SPARQL query)]
+        (with-open [results (.evaluate sparql-query)]
+          (doall (map bindingset-to-set (sesame-iterator-seq results)))))))
+  ([repo query format]
+    (with-open [conn (get-connection repo)
+                bs (java.io.ByteArrayOutputStream.)]
+      (let [sparql-query (.prepareTupleQuery conn QueryLanguage/SPARQL query)
+            writer (case format
+                      :json (SPARQLResultsJSONWriter. bs)
+                      :xml (SPARQLResultsXMLWriter. bs))]
+        (.evaluate sparql-query writer)
+        (.toString bs)))))
 
 (defn json-select
   "helper to get results as json"
