@@ -13,8 +13,7 @@
     org.openrdf.rio.RDFFormat
     org.openrdf.rio.RDFWriter
     org.openrdf.repository.RepositoryException
-    org.openrdf.rio.helpers.JSONLDMode 
-    org.openrdf.rio.helpers.JSONLDSettings))
+    (org.openrdf.rio.helpers JSONLDMode JSONLDSettings BasicWriterSettings)))
 
 
 
@@ -99,15 +98,27 @@
 ;- ----------------------------------------------------------------------------
 ;- 
 
+(defn get-writer 
+  [format bs]
+  (case format
+    :turtle (Rio/createWriter RDFFormat/TURTLE bs)
+    :n3     (Rio/createWriter RDFFormat/N3 bs)
+    :xml    (Rio/createWriter RDFFormat/RDFXML bs)
+    :jsonld (Rio/createWriter RDFFormat/JSONLD bs)))
+
+
 (defn graph-query
   [repo query format]
   (with-open [conn (get-connection repo)
               bs (java.io.ByteArrayOutputStream.)]
     (let [sparql-query (.prepareGraphQuery conn QueryLanguage/SPARQL query)
-          writer (case format
-                    :turtle (Rio/createWriter RDFFormat/TURTLE bs)
-                    :xml (Rio/createWriter RDFFormat/RDFXML bs)
-                    :jsonld (Rio/createWriter RDFFormat/JSONLD bs))]
+          writer (get-writer format bs)
+          conf (.getWriterConfig writer)]
+      (case format
+        :jsonld (do 
+                  (.set conf JSONLDSettings/COMPACT_ARRAYS true)
+                  (.set conf JSONLDSettings/JSONLD_MODE JSONLDMode/COMPACT))
+        nil)
       (.evaluate sparql-query writer)
       (.toString bs))))
 
@@ -120,17 +131,12 @@
   [repo query]
   (graph-query repo query :xml))
 
+(defn n3-graph
+  [repo query]
+  (graph-query repo query :n3))
+
 (defn jsonld-graph
   [repo query]
-  (with-open [conn (get-connection repo)
-              bs (java.io.ByteArrayOutputStream.)]
-    (let [sparql-query (.prepareGraphQuery conn QueryLanguage/SPARQL query)
-          writer (Rio/createWriter RDFFormat/JSONLD bs)
-          conf (.getWriterConfig writer)]
-      (println conf)
-      (.set conf JSONLDSettings/JSONLD_MODE JSONLDMode/COMPACT)
-      (.evaluate sparql-query writer)
-      (.toString bs))))
-
+  (graph-query repo query :jsonld))
 
 
