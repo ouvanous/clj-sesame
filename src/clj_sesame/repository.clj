@@ -112,7 +112,6 @@
   [repo]
   (with-open [conn (get-connection repo)]
     (let [results (.getNamespaces conn)]
-      (println results)
       (into {} (doall (map namespace-to-vec (sesame-iterator-seq results)))))))
 
 

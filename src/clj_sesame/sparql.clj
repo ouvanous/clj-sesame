@@ -1,7 +1,8 @@
 (ns clj-sesame.sparql
   (:use clj-sesame.core
         clj-sesame.rdf
-        clj-sesame.repository)
+        clj-sesame.repository
+        [clojure.string :only (join)])
   (import 
     org.openrdf.repository.manager.RemoteRepositoryManager
     org.openrdf.query.TupleQuery
@@ -138,5 +139,21 @@
 (defn jsonld-graph
   [repo query]
   (graph-query repo query :jsonld))
+
+
+
+
+
+
+(defn get-prefixes-string
+  [& prefixes]
+  (let [p (reduce #(merge % %2) {} prefixes)]
+    (join "\n" (map (fn [[k v]] (str "PREFIX " (name k) ": <" v "> ")) p))))
+  
+
+
+(defn prefix-query
+  [prefix-string query]
+  (str prefix-string query))
 
 
